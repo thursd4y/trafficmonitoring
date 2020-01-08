@@ -1,0 +1,73 @@
+<html>
+<head>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/skeleton.css">
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFDXFGmUWJoDCuJowAuFvMOS9WxfMvgts"></script>
+    <script type="text/javascript" src="js/map_debug.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="turf.min.js" charset="utf-8"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
+
+
+    <title>Event Generator</title>
+</head>
+
+<div class="container">
+    <h3>Create New Event</h3>
+
+    <div id="searchForm">
+        <div class="row">
+          <div class="six columns">
+            <label for="name">Description</label>
+            <input class="u-full-width" type="text" placeholder="" id="name">
+          </div>
+          <div class="six columns">
+            <label for="type">Type</label>
+            <select class="u-full-width" id="type">
+              <option value="trafficJam">Traffic Jam</option>
+              <option value="accident">Accident</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="six columns">
+            <label for="risk">Risk</label>
+            <select class="u-full-width" id="risk">
+              <option value="1">Low</option>
+              <option value="2">Middle</option>
+              <option value="3">High</option>
+            </select>
+          </div>
+          <div class="six columns">
+            <label for="timeloss">Estimated Time Loss (min)</label>
+            <input class="u-full-width" type="number" placeholder="" id="timeloss">
+          </div>
+          </div>
+          <div class="row">
+            <div class="six columns">
+              <label for="lat">Lat</label>
+              <input class="u-full-width" type="text" id="lat" readonly="yes"><br>
+            </div>
+            <div class="six columns">
+              <label for="lng">Lng</label>
+              <input class="u-full-width" type="text" id="lng" readonly="yes"><br>
+            </div>
+        </div>
+        <div class="row">
+            <input id="submit" class="button-primary" type="button" value="Submit">
+			<input id="load" class="button-primary" type="button" value="Generate Route">
+			<p id="log"></p>
+        </div>
+    </div>
+
+
+
+    <div id="map" class="six columns"></div>
+
+    <div id="result"></div>
+
+</div>
