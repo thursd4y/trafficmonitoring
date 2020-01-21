@@ -17,7 +17,7 @@ let events = [];
 let alarmedUsers = [];
 
 app.use(cors());
-
+app.use(express.static(__dirname + '/htdocs'));
 // Configuring body parser middleware
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
