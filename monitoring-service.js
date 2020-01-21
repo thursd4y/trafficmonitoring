@@ -156,12 +156,11 @@ function handle(event, routes, res) {
 
 	let routeLine;
 
-	const eventPoint = turf.point([event.location.latitude, event.location.longitude]);
+	const eventPoint = turf.point([event.location.longitude, event.location.latitude]);
 	const bufferedEvent = turf.buffer(eventPoint, (event.timeLoss/60*event.risk/2)*10);
 
 	routes.forEach(route => {
-		routeLine = turf.lineString(route);
-		if(lineIntersect(bufferedEvent, route.route)){
+		if(lineIntersect(bufferedEvent, route.route).features.length > 0){
 			notifyUser(route.user);
 		}
 	});
