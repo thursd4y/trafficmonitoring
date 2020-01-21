@@ -21,6 +21,7 @@ $( document ).ready(function() {
     });
   });
 
+  var url = "https://nameless-river-26548.herokuapp.com/";
 
   $( "#load" ).on("click", function(){
 	 var nr = $( "#route option:selected" ).val()*1;
@@ -47,7 +48,7 @@ $( document ).ready(function() {
 		  eLng = 13.73;
 	  }
 
-      $.get(`http://localhost:3000/route?sLat=${sLat}&sLng=${sLng}&eLat=${eLat}&eLng=${eLng}`, function(data){
+      $.get(url + `/route?sLat=${sLat}&sLng=${sLng}&eLat=${eLat}&eLng=${eLng}`, function(data){
         loadRoute(data);
       });
     });
@@ -59,7 +60,7 @@ $( document ).ready(function() {
 		let endDate = $("#endDate").val();
 
 
-		$.get(`http://localhost:3000/report?startDate=${startDate}&endDate=${endDate}`, function(data){
+		$.get(url + `/report?startDate=${startDate}&endDate=${endDate}`, function(data){
 			loadReport(data);
 		});
 	});

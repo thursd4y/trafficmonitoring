@@ -100,11 +100,11 @@ app.get('/alarmedUsers', function (req, res) {
 
 	alarmedUsers.forEach(u => {
 		if(u.id == user.id){
-			notifyUser(route.user);
+			res.send("true");
 		}
 	});
 
-	res.send("true");
+	res.send("false");
 
 });
 
