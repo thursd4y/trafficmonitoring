@@ -10,10 +10,10 @@ $( document ).ready(function() {
       risk = $( "#risk option:selected" ).val()*1;
       type = $( "#type option:selected" ).text();
 
-      url = "https://nameless-river-26548.herokuapp.com/event";
+      link = "https://nameless-river-26548.herokuapp.com/event";
 
     // Send the data using post
-    var posting = $.post( url, { description: desc, type, risk, lat, lng, timeLoss : time});
+    var posting = $.post( link, { description: desc, type, risk, lat, lng, timeLoss : time});
 
     // Put the results in a div
     posting.done(function( data ) {
@@ -30,7 +30,7 @@ $( document ).ready(function() {
 	 var sLng;
 	 var eLat;
 	 var eLng;
-	 var user = 55;
+	 var user = 19;
 
 	  if(nr == 1){
 	  	sLat = 48.29;

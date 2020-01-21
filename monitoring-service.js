@@ -96,10 +96,10 @@ app.get('/report', function (req, res) {
 });
 
 app.get('/isUserInDanger', function (req, res) {
-	const user = req.query.user;
+	const id = req.query.user;
 
 	alarmedUsers.forEach(u => {
-		if(u.id == user.id){
+		if(u == id){
 			res.send("true");
 		}
 	});
@@ -177,7 +177,7 @@ function handle(event, routes, res) {
 
 	routes.forEach(route => {
 		if(lineIntersect(bufferedEvent, route.route).features.length > 0){
-			notifyUser(route.user);
+			notifyUser(route);
 		}
 	});
 
@@ -188,9 +188,9 @@ function selectAffectedRoutes(event, res) {
 	let routes = getAllRoutes(event, res);
 }
 
-function notifyUser(user) {
-	console.log("Notified user: " + user.id);
-	alarmedUsers.push(user);
+function notifyUser(route) {
+	console.log("Notified user: " + route.userIdentification);
+	alarmedUsers.push(route.userIdentification);
 }
 
 function selectEvents(res, events, start, end) {
