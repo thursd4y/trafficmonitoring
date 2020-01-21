@@ -95,7 +95,7 @@ app.get('/report', function (req, res) {
 
 });
 
-app.get('/alarmedUsers', function (req, res) {
+app.get('/isUserInDanger', function (req, res) {
 	const user = req.query.user;
 
 	alarmedUsers.forEach(u => {
@@ -189,7 +189,7 @@ function selectAffectedRoutes(event, res) {
 }
 
 function notifyUser(user) {
-	console.log("Notified user: " + user);
+	console.log("Notified user: " + user.id);
 	alarmedUsers.push(user);
 }
 

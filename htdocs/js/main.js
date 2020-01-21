@@ -30,6 +30,7 @@ $( document ).ready(function() {
 	 var sLng;
 	 var eLat;
 	 var eLng;
+	 var user = 55;
 
 	  if(nr == 1){
 	  	sLat = 48.29;
@@ -48,7 +49,7 @@ $( document ).ready(function() {
 		  eLng = 13.73;
 	  }
 
-      $.get(url + `/route?sLat=${sLat}&sLng=${sLng}&eLat=${eLat}&eLng=${eLng}`, function(data){
+      $.get(url + `/route?sLat=${sLat}&sLng=${sLng}&eLat=${eLat}&eLng=${eLng}&user=${user}`, function(data){
         loadRoute(data);
       });
     });
