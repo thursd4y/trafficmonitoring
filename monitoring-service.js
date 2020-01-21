@@ -14,6 +14,7 @@ const serverUrl = "softeng-ws19.herokuapp.com";
 
 // Where we will keep events
 let events = [];
+let alarmedUsers = [];
 
 app.use(cors());
 
@@ -57,6 +58,7 @@ app.get('/route', function (req, res) {
 	const sLng = req.query.sLng;
 	const eLat = req.query.eLat;
 	const eLng = req.query.eLng;
+	const user = req.query.user;
 
 	console.log('https://route.api.here.com/routing/7.2/calculateroute.json?app_id=jtPgSvHS1cmG0UPrTquZ&app_code=2JsYXk-XCD2eSMD7WnCfaw&waypoint0=geo!' + sLat + ',' + sLng + '&waypoint1=geo!' + eLat + ',' + eLng + '&mode=fastest;car;traffic:disabled&representation=display');
 	https.get('https://route.api.here.com/routing/7.2/calculateroute.json?app_id=jtPgSvHS1cmG0UPrTquZ&app_code=2JsYXk-XCD2eSMD7WnCfaw&waypoint0=geo!' + sLat + ',' + sLng + '&waypoint1=geo!' + eLat + ',' + eLng + '&mode=fastest;car;traffic:disabled&representation=display', (resp) => {
@@ -65,7 +67,7 @@ app.get('/route', function (req, res) {
 			body += data;
 		});
 		resp.on("end", () => {
-			generateRoute(res, JSON.parse(body.toString()).response.route[0].shape);
+			generateRoute(res, JSON.parse(body.toString()).response.route[0].shape, user);
 		});
 	}).on("error", (err) => {
 		console.log("Error: " + err.message);
@@ -93,23 +95,36 @@ app.get('/report', function (req, res) {
 
 });
 
+app.get('/alarmedUsers', function (req, res) {
+	const user = req.query.user;
+
+	alarmedUsers.forEach(u => {
+		if(u.id == user.id){
+			notifyUser(route.user);
+		}
+	});
+
+	res.send("true");
+
+});
+
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
 
-function generateRoute(res, routeShape) {
+function generateRoute(res, routeShape, user) {
 	let routeParts = routeShape.map(shape => [shape.split(',')[1] * 1, shape.split(',')[0] * 1]);
 
 	let route = turf.lineString(routeParts);
 
 	res.send(route);
 
-	postRoute(route);
+	postRoute(route, user);
 }
 
-function postRoute(route) {
+function postRoute(route, user) {
 
 	const data = {
 		route,
-		user: "/api/users/55"
+		user: "/api/user/" + user
 	};
 
 	request.post('http://' + serverUrl + '/api/routes', {json: data}, (error, res, body) => {
@@ -144,6 +159,7 @@ function getAllRoutes(event, res) {
 			body += data;
 		});
 		resp.on("end", () => {
+			alarmedUsers = [];
 			handle(event, JSON.parse(body.toString())._embedded.routes, res);
 		});
 	}).on("error", (err) => {
@@ -174,6 +190,7 @@ function selectAffectedRoutes(event, res) {
 
 function notifyUser(user) {
 	console.log("Notified user: " + user);
+	alarmedUsers.push(user);
 }
 
 function selectEvents(res, events, start, end) {
@@ -185,7 +202,7 @@ function selectEvents(res, events, start, end) {
 	events.forEach(event => {
 		if(moment(event.timeStamp).isBetween(start, end)){
 
-			eventPoint = turf.point([event.location.latitude, event.location.longitude]);
+			eventPoint = turf.point([event.location.longitude, event.location.latitude]);
 			bufferedEvent = turf.buffer(eventPoint, (event.timeLoss/60*event.risk/2)*10);
 			selectedEvents.push(event);
 			selectedBuffer.push(bufferedEvent)

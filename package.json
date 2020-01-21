@@ -4,7 +4,7 @@
   "description": "TrafficMonitoring Server for SofEng. Project",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node monitoring-service.js"
   },
   "author": "",
   "license": "ISC",

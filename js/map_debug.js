@@ -76,7 +76,7 @@ function initMap() {
 		let line = data.bufferedEvent;
 
 		$.each(line.geometry.coordinates[0], function (key) {
-			let wp = { lat: line.geometry.coordinates[0][key][0], lng: line.geometry.coordinates[0][key][1] }
+			let wp = { lat: line.geometry.coordinates[0][key][1], lng: line.geometry.coordinates[0][key][0] }
 			coords.push(wp);
 		});
 
@@ -112,7 +112,7 @@ function initMap() {
 
 			let line = sBuffers[key];
 			$.each(line.geometry.coordinates[0], function (key) {
-				let wp = { lat: line.geometry.coordinates[0][key][0], lng: line.geometry.coordinates[0][key][1] }
+				let wp = { lat: line.geometry.coordinates[0][key][1], lng: line.geometry.coordinates[0][key][0] }
 				coords.push(wp);
 			});
 
