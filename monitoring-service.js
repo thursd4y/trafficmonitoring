@@ -6,9 +6,9 @@ const request = require('request');
 const turf = require('turf');
 const lineIntersect = require('@turf/line-intersect').default;
 const moment = require('moment');
+const PORT = process.env.PORT || 3000
 
 const app = express();
-const port = 3000;
 const serverPort = 8080;
 const serverUrl = "softeng-ws19.herokuapp.com";
 
@@ -108,7 +108,7 @@ app.get('/alarmedUsers', function (req, res) {
 
 });
 
-app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
+app.listen(PORT, () => console.log(`Hello world app listening on port ${PORT}!`));
 
 function generateRoute(res, routeShape, user) {
 	let routeParts = routeShape.map(shape => [shape.split(',')[1] * 1, shape.split(',')[0] * 1]);
