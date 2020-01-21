@@ -10,7 +10,7 @@ $( document ).ready(function() {
       risk = $( "#risk option:selected" ).val()*1;
       type = $( "#type option:selected" ).text();
 
-      url = "http://localhost:3000/event";
+      url = "https://nameless-river-26548.herokuapp.com/event";
 
     // Send the data using post
     var posting = $.post( url, { description: desc, type, risk, lat, lng, timeLoss : time});
@@ -21,7 +21,7 @@ $( document ).ready(function() {
     });
   });
 
-  var url = "https://nameless-river-26548.herokuapp.com/";
+  var url = "https://nameless-river-26548.herokuapp.com";
 
   $( "#load" ).on("click", function(){
 	 var nr = $( "#route option:selected" ).val()*1;
